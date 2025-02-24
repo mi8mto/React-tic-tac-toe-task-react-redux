@@ -2,12 +2,15 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './Information.module.css';
 
-const InformationLayout = () => {
+const InformationLayout = ({ status }) => {
+	return <div className={styles.status}>{status}</div>;
+};
+
+export const InformationContainer = () => {
 	const currentPlayer = useSelector((state) => state.currentPlayer);
 	const isGameEnded = useSelector((state) => state.isGameEnded);
 	const isDraw = useSelector((state) => state.isDraw);
 
-	// Мемоизируем объект, чтобы избежать его создания при каждом рендере
 	const status = useMemo(() => {
 		let statusMessage = '';
 
@@ -20,11 +23,7 @@ const InformationLayout = () => {
 		}
 
 		return statusMessage;
-	}, [currentPlayer, isGameEnded, isDraw]); // Мемоизация зависит от этих значений
+	}, [currentPlayer, isGameEnded, isDraw]);
 
-	return <div className={styles.status}>{status}</div>;
-};
-
-export const InformationContainer = () => {
-	return <InformationLayout />;
+	return <InformationLayout status={status} />;
 };

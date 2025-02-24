@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FieldContainer } from '../Field/Field';
+import { FieldLayout } from '../Field/Field'; // Изменили на импорт из правильного пути
 import { InformationContainer } from '../Information/Information';
 import styles from './Game.module.css';
 import {
@@ -23,7 +23,6 @@ const WIN_PATTERNS = [
 
 export const Game = () => {
 	const dispatch = useDispatch();
-
 	const field = useSelector((state) => state.field);
 	const currentPlayer = useSelector((state) => state.currentPlayer);
 	const isGameEnded = useSelector((state) => state.isGameEnded);
@@ -48,7 +47,6 @@ export const Game = () => {
 
 		const newField = [...field];
 		newField[index] = currentPlayer;
-
 		dispatch(setField(newField));
 
 		const winner = checkWinner(newField);
@@ -72,7 +70,7 @@ export const Game = () => {
 	return (
 		<div className={styles.game}>
 			<InformationContainer />
-			<FieldContainer onCellClick={onCellClick} />
+			<FieldLayout field={field} onCellClick={onCellClick} />
 			<button className={styles.resetButton} onClick={onReset}>
 				Начать заново
 			</button>

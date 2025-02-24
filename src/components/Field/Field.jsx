@@ -1,24 +1,14 @@
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
 import styles from './Field.module.css';
-import { setField } from '../../actions/index';
 
-const FieldLayout = ({ onCellClick }) => {
-	const field = useSelector((state) => state.field);
-	const dispatch = useDispatch();
-
-	const handleCellClick = (index) => {
-		if (field[index] !== '') return;
-		onCellClick(index, dispatch);
-	};
-
+export const FieldLayout = ({ field, onCellClick }) => {
 	return (
 		<div className={styles.grid}>
 			{field.map((cell, index) => (
 				<button
 					key={index}
 					className={styles.cell}
-					onClick={() => handleCellClick(index)}
+					onClick={() => onCellClick(index)}
 					disabled={cell !== ''}
 				>
 					{cell}
@@ -29,9 +19,6 @@ const FieldLayout = ({ onCellClick }) => {
 };
 
 FieldLayout.propTypes = {
+	field: PropTypes.array.isRequired,
 	onCellClick: PropTypes.func.isRequired,
-};
-
-export const FieldContainer = ({ onCellClick }) => {
-	return <FieldLayout onCellClick={onCellClick} />;
 };
